@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Interactive 3D — Standalone Hero</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap" rel="stylesheet" />
+
+<!-- ============ CSS BLOCK ============ -->
+<style>
+  /* Page background (optional — only to mimic the dark site) */
+  body {
+    margin: 0;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem;
+    background: #0a0a0a;
+    font-family: "Inter", system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
+  }
+
+  /* ---- Hero card ---- */
+  .spline-hero {
+    position: relative;
+    width: 100%;
+    max-width: 1024px;
+    height: 500px;
+    overflow: hidden;
+    border-radius: 0.5rem;
+    border: 1px solid #262626;
+    background: rgba(0, 0, 0, 0.96);
+    box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+  }
+
+  .spline-hero__inner {
+    display: flex;
+    height: 100%;
+  }
+
+  /* ---- Left: text ---- */
+  .spline-hero__left {
+    flex: 1;
+    position: relative;
+    z-index: 10;
+    padding: 2rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+
+  .spline-hero__title {
+    margin: 0;
+    font-size: 2.25rem;
+    line-height: 1.1;
+    font-weight: 700;
+    background: linear-gradient(to bottom, #fafafa, #a3a3a3);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+
+  .spline-hero__desc {
+    margin-top: 1rem;
+    max-width: 32rem;
+    color: #d4d4d4;
+    line-height: 1.6;
+  }
+
+  /* ---- Right: 3D scene ---- */
+  .spline-hero__right {
+    flex: 1;
+    position: relative;
+  }
+
+  .spline-hero__viewer {
+    width: 100%;
+    height: 100%;
+  }
+
+  /* ---- Spotlight effect ---- */
+  .spline-hero__spotlight {
+    position: absolute;
+    z-index: 1;
+    pointer-events: none;
+    top: -10rem;
+    left: 0;
+    height: 169%;
+    width: 138%;
+    opacity: 0;
+    animation: spline-spotlight 2s ease 0.75s 1 forwards;
+  }
+
+  @keyframes spline-spotlight {
+    0% {
+      opacity: 0;
+      transform: translate(-72%, -62%) scale(0.5);
+    }
+    100% {
+      opacity: 1;
+      transform: translate(-50%, -40%) scale(1);
+    }
+  }
+
+  /* ---- Responsive ---- */
+  @media (min-width: 768px) {
+    .spline-hero__title { font-size: 3rem; }
+    .spline-hero__spotlight { left: 15rem; top: -5rem; }
+  }
+
+  @media (max-width: 640px) {
+    .spline-hero { height: auto; }
+    .spline-hero__inner { flex-direction: column; }
+    .spline-hero__right { min-height: 300px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ============ HTML BLOCK ============ -->
+<div class="spline-hero">
+  <!-- Spotlight -->
+  <svg class="spline-hero__spotlight" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 3787 2842" fill="none">
+    <g filter="url(#spline-spotlight-filter)">
+      <ellipse
+        cx="1924.71" cy="273.501" rx="1924.71" ry="273.501"
+        transform="matrix(-0.822377 -0.568943 -0.568943 0.822377 3631.88 2291.09)"
+        fill="white" fill-opacity="0.21"></ellipse>
+    </g>
+    <defs>
+      <filter id="spline-spotlight-filter" x="0.860352" y="0.838989" width="3785.16" height="2840.26"
+        filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+        <feFlood flood-opacity="0" result="BackgroundImageFix"></feFlood>
+        <feBlend mode="normal" in="SourceGraphic" in2="BackgroundImageFix" result="shape"></feBlend>
+        <feGaussianBlur stdDeviation="151" result="effect1_foregroundBlur"></feGaussianBlur>
+      </filter>
+    </defs>
+  </svg>
+
+  <div class="spline-hero__inner">
+    <!-- Left content -->
+    <div class="spline-hero__left">
+      <h1 class="spline-hero__title">Interactive 3D</h1>
+      <p class="spline-hero__desc">
+        Bring your UI to life with beautiful 3D scenes. Create immersive experiences
+        that capture attention and enhance your design.
+      </p>
+    </div>
+
+    <!-- Right content: 3D scene -->
+    <div class="spline-hero__right">
+      <spline-viewer
+        class="spline-hero__viewer"
+        url="https://prod.spline.design/kZDDjO5HuC9GJUM2/scene.splinecode">
+      </spline-viewer>
+    </div>
+  </div>
+</div>
+
+<!-- ============ JS BLOCK ============ -->
+<script type="module" src="https://unpkg.com/@splinetool/viewer@1.9.48/build/spline-viewer.js"></script>
+
+</body>
+</html>
